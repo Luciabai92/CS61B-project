@@ -3,7 +3,7 @@
  *     CS61B proj1a create ArrayDeque
  */
 
-public class ArrayDeque<Item> {
+public class ArrayDeque<Item> implements Deque<Item>{
     private int size;
     private Item[] items;
     private int nextFirst;
@@ -11,7 +11,7 @@ public class ArrayDeque<Item> {
 
     /** Creates an empty array deque.*/
     public ArrayDeque(){
-        items = (Item[]) new Object[16];
+        items = (Item[]) new Object[8];
         size = 0;
         nextFirst = 0;
         nextLast = 1;
@@ -32,7 +32,8 @@ public class ArrayDeque<Item> {
     }
 
     /** return true if the array is empty */
-    private boolean ifEmpty(){
+    @Override
+    public boolean isEmpty(){
         return size() == 0;
     }
 
@@ -58,7 +59,7 @@ public class ArrayDeque<Item> {
         return (beginIndex+index)%items.length;
     }
 
-    /** resizes the underlying array to the target capacity. */
+    /** up sizes the underlying array to the target capacity. */
     private void resize(int capacity){
         Item[] a = (Item []) new Object[capacity];
         int lastIndex= nextLast;
@@ -91,6 +92,7 @@ public class ArrayDeque<Item> {
     }
 
     /** Inserts X into the back of the list. */
+    @Override
     public void addLast(Item x) {
         if(size == items.length){
             resize(size*2);
@@ -101,6 +103,7 @@ public class ArrayDeque<Item> {
     }
 
     /** Inserts X into the front of the list. */
+    @Override
     public void addFirst(Item x) {
         if(size == items.length){
             resize(size*2);
@@ -111,8 +114,9 @@ public class ArrayDeque<Item> {
     }
 
     /** Gets the ith item in the list (0 is the front). */
+    @Override
     public Item get(int i) {
-        if(ifEmpty()){
+        if(isEmpty()){
             return null;
         }
         i = realIndex(i);
@@ -120,6 +124,7 @@ public class ArrayDeque<Item> {
     }
 
     /** Returns the number of items in the list. */
+    @Override
     public int size() {
         return size;
     }
@@ -129,8 +134,9 @@ public class ArrayDeque<Item> {
         return items.length >= 16 && size < (items.length / 4);
     }
 
+    @Override
     public Item removeLast() {
-        if(ifEmpty()){
+        if(isEmpty()){
             return null;
         }
         //items[size-1] = 0; not necessary when int, but necessary for object because there's a link
@@ -146,6 +152,7 @@ public class ArrayDeque<Item> {
     }
 
     /** Deletes item from front of the list and returns deleted item. */
+    @Override
     public Item removeFirst() {
         if(size==0){
             return null;
@@ -162,6 +169,7 @@ public class ArrayDeque<Item> {
     }
 
     /** print out the Deque */
+    @Override
     public void printDeque(){
         if(size==0){
             System.out.println("empty");
